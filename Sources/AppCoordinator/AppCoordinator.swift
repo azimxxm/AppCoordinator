@@ -30,6 +30,12 @@ public final class AppCoordinator {
         completion?()
     }
     
+    /// Push a SwiftUI view onto the navigation stack.
+    public func pushSwiftUIView(_ view: some View, animated: Bool = true, completion: (() -> Void)? = nil) {
+        navigationController.pushViewController(view.wrapInToViewController(), animated: animated)
+        completion?()
+    }
+    
     /// Pop the current UIViewController from the navigation stack.
     public func pop(animated: Bool = true, completion: (() -> Void)? = nil) {
         navigationController.popViewController(animated: animated)
@@ -41,30 +47,67 @@ public final class AppCoordinator {
         navigationController.present(viewController, animated: animated, completion: completion)
     }
     
+    /// Present a SwiftUI view modally.
+    public func presentSwiftUIView(_ view: some View, animated: Bool = true, completion: (() -> Void)? = nil) {
+        navigationController.present(view.wrapInToViewController(), animated: animated, completion: completion)
+    }
+    
     /// Dismiss the current modal UIViewController.
     public func dismiss(animated: Bool = true, completion: (() -> Void)? = nil) {
         navigationController.dismiss(animated: animated, completion: completion)
     }
     
-    // Pop To Root ViewController
+    /// Pop to the root view controller.
     public func backToRoot(animated: Bool = true) {
         navigationController.popToRootViewController(animated: animated)
     }
     
-    // return to specific view controller
+    /// Pop to a specific view controller.
     public func backToSpecificViewController(_ viewController: UIViewController, animated: Bool = true) {
         navigationController.popToViewController(viewController, animated: animated)
     }
+    
+    /// Show a view controller using default presentation style.
+    public func show(vc: UIViewController) {
+        navigationController.show(vc, sender: nil)
+    }
+    
+    /// Replace the navigation stack with a new set of view controllers.
+    public func replaceStack(with viewControllers: [UIViewController], animated: Bool = true) {
+        navigationController.setViewControllers(viewControllers, animated: animated)
+    }
+    
+    /// Check if a view controller exists in the navigation stack.
+    public func containsViewController(ofType type: UIViewController.Type) -> Bool {
+        return navigationController.viewControllers.contains(where: { $0.isKind(of: type) })
+    }
+    
+    /// Push a view conditionally, if not already in the stack.
+    public func pushIfNotPresent(_ viewController: UIViewController, animated: Bool = true) {
+        guard !containsViewController(ofType: type(of: viewController)) else { return }
+        push(viewController, animated: animated)
+    }
+    
+    /// Get the current top view controller.
+    public var topViewController: UIViewController? {
+        return navigationController.topViewController
+    }
+    
+    /// Set a custom transition animation for the navigation controller.
+    public func setCustomTransition(_ animation: CATransition) {
+        navigationController.view.layer.add(animation, forKey: kCATransition)
+    }
 }
 
-
+// MARK: - Extensions for SwiftUI Integration
 extension View {
-    public func wrapInToViewController()-> UIViewController {
+    /// Wrap a SwiftUI view into a `UIViewController`.
+    public func wrapInToViewController() -> UIViewController {
         return UIHostingController(rootView: self)
     }
 }
 
-
+// MARK: - `ViewControllerWrapper`
 public struct ViewControllerWrapper: UIViewControllerRepresentable {
     private let viewController: UIViewController
     
@@ -78,3 +121,4 @@ public struct ViewControllerWrapper: UIViewControllerRepresentable {
     
     public func updateUIViewController(_ uiViewController: UIViewController, context: Context) {}
 }
+
