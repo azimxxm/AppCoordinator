@@ -13,8 +13,9 @@ public final class AppCoordinator {
     }
     
     /// Set the root SwiftUI view for the navigation controller.
-    public func setRootView(_ view: some View) -> AnyView {
+    public func setRootView(_ view: some View, setNavBarHidden: Bool = false) -> AnyView {
         setRoot(view)
+        self.navigationController.setNavigationBarHidden(setNavBarHidden, animated: false)
         return AnyView(ViewControllerWrapper(navigationController))
     }
     
