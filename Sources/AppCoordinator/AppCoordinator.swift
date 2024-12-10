@@ -48,7 +48,7 @@ public final class AppCoordinator {
 
 
 extension View {
-    func wrapInToViewController()-> UIViewController {
+    public func wrapInToViewController()-> UIViewController {
         return UIHostingController(rootView: self)
     }
 }
