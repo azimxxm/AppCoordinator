@@ -45,6 +45,16 @@ public final class AppCoordinator {
     public func dismiss(animated: Bool = true, completion: (() -> Void)? = nil) {
         navigationController.dismiss(animated: animated, completion: completion)
     }
+    
+    // Pop To Root ViewController
+    public func backToRoot(animated: Bool = true) {
+        navigationController.popToRootViewController(animated: animated)
+    }
+    
+    // return to specific view controller
+    public func backToSpecificViewController(_ viewController: UIViewController, animated: Bool = true) {
+        navigationController.popToViewController(viewController, animated: animated)
+    }
 }
 
 
