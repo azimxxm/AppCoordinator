@@ -106,7 +106,7 @@ extension View {
         return UIHostingController(rootView: self)
     }
     
-    /// Wrap a SwiftUI view into a `UINavigationController`.
+    /// Wrap a SwiftUI view into a `UINavigationController`. 
     public func wrapInToNavigationController() -> UINavigationController {
         return UINavigationController(rootViewController: UIHostingController(rootView: self))
     }
