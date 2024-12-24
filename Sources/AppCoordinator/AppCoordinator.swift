@@ -5,7 +5,7 @@ import SwiftUI
 import UIKit
 
 public final class AppCoordinator {
-    private let navigationController: UINavigationController
+    private var navigationController: UINavigationController
     
     public init() {
         self.navigationController = UINavigationController()
@@ -20,6 +20,11 @@ public final class AppCoordinator {
     }
     
     private func setRoot(_ view: some View) {
+        let hostingController = UIHostingController(rootView: view)
+        navigationController.setViewControllers([hostingController], animated: false)
+    }
+    /// Change root navigationController
+    public func changeRoot(_ view: some View) {
         let hostingController = UIHostingController(rootView: view)
         navigationController.setViewControllers([hostingController], animated: false)
     }
