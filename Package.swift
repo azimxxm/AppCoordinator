@@ -7,7 +7,7 @@ let package = Package(
     name: "AppCoordinator",
     platforms: [
         .iOS(.v15),
-        .macOS(.v11) ,
+        .macOS(.v11),
         .tvOS(.v14),
         .watchOS(.v5)
     ],
