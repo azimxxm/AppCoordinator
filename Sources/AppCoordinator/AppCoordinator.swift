@@ -136,7 +136,7 @@ public struct ViewControllerWrapper: View {
     }
 
     public var body: some View {
-        UIViewControllerRepresentableWrapper(viewController)
+        UIViewControllerRepresentableWrapper(viewController: viewController)
     }
 
     private struct UIViewControllerRepresentableWrapper: UIViewControllerRepresentable {
